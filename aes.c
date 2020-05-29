@@ -162,27 +162,3 @@ void AESDecryptCfb(FILE *in, FILE *out, unsigned char *key) {
 		fwrite(sideBuffer, 1, lastBlockSize, out);
 	}
 }
-
-
-
-
-
-//void AES_Encrypt(unsigned char *data, unsigned int size, unsigned char *key) {
-//	const unsigned int blocks = size / 16;
-//	unsigned char keys[11][16];
-//
-//	keySchedule((unsigned int *)key, (unsigned int *)keys);
-//
-//	for (unsigned int i = 0; i < blocks; ++i)
-//		encryptBlock(data + 16 * i, keys);
-//}
-//
-//void AES_Decrypt(unsigned char *data, unsigned int size, unsigned char *key) {
-//	const unsigned int blocks = size / 16;
-//	unsigned char keys[11][16];
-//
-//	keySchedule((unsigned int *)key, (unsigned int *)keys);
-//
-//	for (unsigned int i = 0; i < blocks; ++i)
-//		decryptBlock(data + 16 * i, keys);
-//}
