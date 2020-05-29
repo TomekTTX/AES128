@@ -75,7 +75,7 @@ void subBytesReverse(unsigned char *data, int count) {
 		data[i] = inverseSBox[data[i]];
 }
 
-// Multiply block bytes over GF(256) by the matrix:
+// Multiply each column of block over GF(256) by the matrix:
 // 2, 3, 1, 1
 // 1, 2, 3, 1
 // 1, 1, 2, 3
@@ -94,7 +94,7 @@ void mixColumns(unsigned char *block) {
 	}
 }
 
-// Multiply block bytes over GF(256) by the matrix:
+// Multiply each column of block over GF(256) by the matrix:
 // 14, 11, 13,  9
 //  9, 14, 11, 13
 // 13,  9, 14, 11
