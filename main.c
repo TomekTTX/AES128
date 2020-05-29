@@ -3,11 +3,6 @@
 #include "aes.h"
 #include "utils.h"
 
-#define TEST_FILE "test.txt"
-#define TEST_FILE_OUT "test.dat"
-#define TEST_FILE_DEC "dectest.txt"
-
-
 int main(int argc, char **argv) {
 	unsigned char key[16], mode;
 	bool decrypting;
@@ -58,35 +53,3 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
-
-/*
-	unsigned char key[16] = "0123456789ABCDEF";
-
-	FILE *f1, *f2, *f3;
-
-	fopen_s(&f1, TEST_FILE, "r");
-	fopen_s(&f2, TEST_FILE_OUT, "wb");
-
-	AESEncryptCfb(f1, f2, key);
-
-	fclose(f1);
-	freopen_s(&f2, TEST_FILE_OUT, "rb", f2);
-	fopen_s(&f3, TEST_FILE_DEC, "w");
-
-	AESDecryptCfb(f2, f3, key);
-
-	fclose(f2);
-	fclose(f3);
-*/
-
-//unsigned char key[] = "abcdefghijklmnop";
-
-//unsigned char a[] = "0123456789ABCDEF";
-//
-//AES_Encrypt(a, 16, key);
-//AES_Decrypt(a, 16, key);
-
-//if (argc < 2) {
-//	puts("Please specify file name.");
-//	return 1;
-//}
