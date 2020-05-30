@@ -163,54 +163,27 @@ void AESDecryptCfb(FILE *in, FILE *out, unsigned char *key) {
 	}
 }
 
-void AESEncryptOfb(FILE *in, FILE *out, unsigned char *key) {
+void AESEncryptOfb(FILE *in, FILE *out, unsigned char *key, bool decrypt) {
 	unsigned char buffer[16], sideBuffer[16], keys[11][16];
-	size_t blockCount = 0, lastBlockSize = 0;
+	size_t lastBlockSize = 0;
 
 	keySchedule((unsigned int *)key, (unsigned int *)keys);
 
-	fwrite(&blockCount, sizeof(blockCount), 2, out);
-	fillRandom128(sideBuffer);
-	fwrite(sideBuffer, 1, 16, out);
+	if (decrypt) 
+		fread(sideBuffer, 1, 16, in);
+	else {
+		fillRandom128(sideBuffer);
+		fwrite(sideBuffer, 1, 16, out);
+	}
 
 	while ((lastBlockSize = fread(buffer, 1, 16, in)) == 16) {
 		encryptBlock(sideBuffer, keys);
 		xor128(buffer, sideBuffer);
 		fwrite(buffer, 1, 16, out);
-		++blockCount;
 	}
 
 	if (lastBlockSize != 0) {
 		memset(buffer + lastBlockSize, 0, 16 - lastBlockSize);
-		encryptBlock(sideBuffer, keys);
-		xor128(buffer, sideBuffer);
-		fwrite(buffer, 1, 16, out);
-	}
-
-	fseek(out, 0, SEEK_SET);
-	fwrite(&blockCount, sizeof(blockCount), 1, out);
-	fwrite(&lastBlockSize, sizeof(lastBlockSize), 1, out);
-}
-
-void AESDecryptOfb(FILE *in, FILE *out, unsigned char *key) {
-	unsigned char buffer[16], sideBuffer[16], keys[11][16];
-	size_t blockCount = 0, lastBlockSize = 0;
-
-	keySchedule((unsigned int *)key, (unsigned int *)keys);
-
-	fread(&blockCount, sizeof(blockCount), 1, in);
-	fread(&lastBlockSize, sizeof(lastBlockSize), 1, in);
-	fread(sideBuffer, 1, 16, in);
-
-	while (blockCount-- > 0) {
-		fread(buffer, 1, 16, in);
-		encryptBlock(sideBuffer, keys);
-		xor128(buffer, sideBuffer);
-		fwrite(buffer, 1, 16, out);
-	}
-
-	if (lastBlockSize != 0) {
-		fread(buffer, 1, 16, in);
 		encryptBlock(sideBuffer, keys);
 		xor128(buffer, sideBuffer);
 		fwrite(buffer, 1, lastBlockSize, out);
