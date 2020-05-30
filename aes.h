@@ -9,3 +9,6 @@ void AESDecryptCbc(FILE *in, FILE *out, unsigned char *key);
 
 void AESEncryptCfb(FILE *in, FILE *out, unsigned char *key);
 void AESDecryptCfb(FILE *in, FILE *out, unsigned char *key);
+
+void AESEncryptOfb(FILE *in, FILE *out, unsigned char *key);
+void AESDecryptOfb(FILE *in, FILE *out, unsigned char *key);
