@@ -12,3 +12,5 @@ void AESDecryptCfb(FILE *in, FILE *out, unsigned char *key);
 
 void AESEncryptOfb(FILE *in, FILE *out, unsigned char *key);
 void AESDecryptOfb(FILE *in, FILE *out, unsigned char *key);
+
+void AESEncryptCtr(FILE *in, FILE *out, unsigned char *key, bool decrypt);
