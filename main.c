@@ -41,8 +41,10 @@ int main(int argc, char **argv) {
 			decrypting ? AESDecryptCbc(in, out, key) : AESEncryptCbc(in, out, key);
 		else if (streqi(argv[5], "cfb"))
 			decrypting ? AESDecryptCfb(in, out, key) : AESEncryptCfb(in, out, key);
+		else if (streqi(argv[5], "ofb"))
+			decrypting ? AESDecryptOfb(in, out, key) : AESEncryptOfb(in, out, key);
 		else
-			fputs("Invalid mode. ECB, CBC and CFB are supported.", stderr);
+			fputs("Invalid mode. ECB, CBC, CFB and OFB are supported.", stderr);
 
 		fclose(in);
 		fclose(out);
