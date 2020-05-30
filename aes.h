@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include <stdbool.h>
 
 void AESEncryptEcb(FILE *in, FILE *out, unsigned char *key);
 void AESDecryptEcb(FILE *in, FILE *out, unsigned char *key);
