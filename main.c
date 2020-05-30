@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 		else if (streqi(argv[5], "cfb"))
 			decrypting ? AESDecryptCfb(in, out, key) : AESEncryptCfb(in, out, key);
 		else if (streqi(argv[5], "ofb"))
-			decrypting ? AESDecryptOfb(in, out, key) : AESEncryptOfb(in, out, key);
+			AESEncryptOfb(in, out, key, decrypting);
 		else if (streqi(argv[5], "ctr"))
 			AESEncryptCtr(in, out, key, decrypting);
 		else
