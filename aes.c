@@ -217,3 +217,34 @@ void AESDecryptOfb(FILE *in, FILE *out, unsigned char *key) {
 	}
 }
 
+void AESEncryptCtr(FILE *in, FILE *out, unsigned char *key, bool decrypt) {
+	unsigned char buffer[16], keys[11][16];
+	unsigned long long iv[2], copy[2];
+	unsigned long long *nonce = iv, *ctr = iv + 1;
+	size_t lastBlockSize = 0;
+
+	keySchedule((unsigned int *)key, (unsigned int *)keys);
+
+	if (decrypt)
+		fread(nonce, 8, 1, in);
+	else {
+		fillRandom128(nonce);
+		fwrite(nonce, 8, 1, out);
+	}
+	*ctr = 0;
+
+	while ((lastBlockSize = fread(buffer, 1, 16, in)) == 16) {
+		memcpy(copy, iv, 16);
+		encryptBlock((unsigned char *)copy, keys);
+		xor128(buffer, copy);
+		fwrite(buffer, 1, 16, out);
+		++*ctr;
+	}
+
+	if (lastBlockSize != 0) {
+		memset(buffer + lastBlockSize, 0, 16 - lastBlockSize);
+		encryptBlock((unsigned char *)iv, keys);
+		xor128(buffer, iv);
+		fwrite(buffer, 1, lastBlockSize, out);
+	}
+}
