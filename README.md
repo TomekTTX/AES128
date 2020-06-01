@@ -1,2 +1,2 @@
 # AES128
-Implementation of 128-bit AES file encrypting program for school project.
+Application for encrypting files using the 128-bit AES algorithm (school project).
